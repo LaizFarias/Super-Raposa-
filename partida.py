@@ -48,6 +48,7 @@ menu_img2 = pygame.transform.scale(menu_img2, [1200,600])
 
 #========================================================================
 
+
 #inicialização dos itens do game
 def inicializacao():
     # cria o grupo de cerebros 
@@ -174,3 +175,55 @@ while estado:
     if len(Group_cerebro) <= 5:
         novo_cerebro = sorteia_cerebro(WIDTH * (1+random.random()))
         Group_cerebro.add(novo_cerebro)
+
+    if len(Group_cogumelo) <= 5:
+        novo_cogumelo = sorteia_cogumelo(WIDTH * (1+random.random()))
+        Group_cogumelo.add(novo_cogumelo)
+
+    if len(Group_vida) <= 5:
+        novo_vida = sorteia_vida(WIDTH * (1+random.random()))
+        Group_vida.add(novo_vida)
+#=======================================================================================================
+    #adiciona uma colisão do grupo player com o grupo do chão
+    if pygame.sprite.groupcollide(raposa.Group_char, piso.Group_piso, False, False):
+        velocidade_de_caida = 0
+    else:
+        velocidade_de_caida = 10 
+    #adiciona uma colisão do grupo player com o grupo do cerebro
+    if pygame.sprite.groupcollide(raposa.Group_char, Group_cerebro, False, True):
+        #Colidiu com o cérebro e ganhou pontos 
+        pontos += 1
+        barulho_cerebro.play()
+    # Se a divisão por 4 for igural a zera , aumenta a velocidade de deslocamento 
+    # de todos os itens 
+    if pontos % 4 == 0 and pontos != 0 and desloca < desloca0+(10*pontos/4):
+        desloca += 0.2               
+        piso.desloca = desloca
+        cerebro.desloca = desloca
+        cogumelos.desloca = desloca
+        raposa.desloca = desloca
+    #adiciona uma colisão do grupo player com o grupo de vida
+    if pygame.sprite.groupcollide(raposa.Group_char, Group_vida, False, True):
+        #colidiu com o coração e ganhou mais uma vida
+        vida += 1      
+        barulho_vida.play()   
+
+    #adiciona uma colisão do grupo player com o grupo do cogumelo
+    if pygame.sprite.groupcollide(raposa.Group_char, Group_cogumelo, False, True):
+        #colidiu com o cogumelo e perdeu vida 
+        vida -= 1
+        barulho_cogumelo.play()
+
+    #condição para entrar na tela de game over
+    if vida == 0:
+        pygame.mixer.music.set_volume(0)
+        game_over.play()
+        tela_game_over(janela, over1,over2)
+        Group_cerebro, Group_cogumelo, Group_vida = inicializacao()
+        vida = 3
+        # break #return estado depois
+    raposa.Group_char.update()
+    atualiza()
+    # chamar a minha função toda vez que eu for executar ela na minha janela.
+    desenha()
+    pygame.display.update()
