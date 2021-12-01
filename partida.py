@@ -117,3 +117,60 @@ pygame.mixer.music.set_volume(0)
 ativa_menu.play()
 menu_princial(janela,menu_img1,menu_img2)
 #=============================================================================
+
+#Inicialização da partida utilizando a variavel estado 
+while estado:
+
+#================================================================================
+# Escrevendo a contagem de pontos feitos pelo jogador no canto superior direito 
+# a cada vez que ele colide com um cérebro 
+    janela.blit(plano_de_fundo, (0,0))
+    font = pygame.font.SysFont('Arial',30)
+    text = font.render('Pontos', True, [255,255,255])
+    janela.blit(text, [1100, 20])
+    conta_ponto = font.render(f'{pontos}', True, [255,255,255])
+    janela.blit(conta_ponto, [1125, 50])
+       
+# Escrevendo a contagem de vidas conquistadas pelo jogador no canto superior direito 
+# a cada vez que ele colide com um coração
+    font = pygame.font.SysFont('Arial',30)
+    text = font.render('Vidas', True, [255,255,255])
+    janela.blit(text, [1000, 20])
+    desconto_ponto = font.render(f'{vida}', True, [255,255,255])
+    janela.blit(desconto_ponto, [1025 , 50])
+
+    janela.blit(text, [1000, 20])
+    intercala.tick(10)
+#=================================================================================
+
+    for event in pygame.event.get():
+        #se o evento for igual a fechar 
+        if event.type == pygame.QUIT:
+            #fecha janela
+            pygame.quit()
+            break
+    #comando para pausar o jogo, aperte P para pausar e aperte P novamente para sair do modo pausa. 
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                pausa = not pausa
+
+
+    if pausa == True: 
+        #desliga a música principal enquanto o jogo estiver pausado
+        pygame.mixer.music.set_volume(0)
+        continue
+    else:
+        # Liga o som principal novamente quando o jogo sai da condição de pausa
+        pygame.mixer.music.set_volume(1)
+
+    #se tiver fora da tela esse objeto, posso tirar ele do meu grupo e remover esse objeto. 
+    if fim_de_tela(piso.Group_piso.sprites()[0]):
+        piso.Group_piso.remove(piso.Group_piso.sprites()[0])
+        #cria um novo piso
+        novo_piso = piso.Piso(WIDTH-40)
+        piso.Group_piso.add(novo_piso)
+
+    #sorteia o itens do jogo
+    if len(Group_cerebro) <= 5:
+        novo_cerebro = sorteia_cerebro(WIDTH * (1+random.random()))
+        Group_cerebro.add(novo_cerebro)
