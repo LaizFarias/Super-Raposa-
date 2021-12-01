@@ -11,11 +11,11 @@ Introdução:
 
 Video de apresentação: 
 
-- Link: 
+- Link: https://www.youtube.com/watch?v=vebhR_Oq2js
 
 Como iniciar o game? 
 
--  Click no arquivo partida.py
+-  Click no arquivo partida.py para executar o game
 
 Mecânica: 
 - Inicialmente o jogador começa o game com 3 vidas, ou seja, ele tem direito a 3 mortes. 
@@ -29,7 +29,7 @@ Mecânica:
 Botões para jogar: 
 
 - Para iniciar : Pressione qualquer tecla para jogar 
-- Para correr/direcional : Botão [<-] para ir para a esquerda/ Botão [->] para ir para a esquerda
+- Para correr/direcional : Botão [<-] para ir para a esquerda/ Botão [->] para ir para a direita
 - Para voar: Segure o botão [Space] e utilize os botões direcionais para guiar o voô
 - Se você pretende pausar o jogo : Aparte o botão [P] para pausar, e aperte o mesmo botão [P] para retorna ao jogo 
 
