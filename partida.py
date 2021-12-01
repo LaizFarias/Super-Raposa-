@@ -47,3 +47,73 @@ menu_img2 = pygame.image.load('graficos/menu_tela2.png').convert_alpha()
 menu_img2 = pygame.transform.scale(menu_img2, [1200,600])
 
 #========================================================================
+
+#inicialização dos itens do game
+def inicializacao():
+    # cria o grupo de cerebros 
+    Group_cerebro = pygame.sprite.Group()
+    c = 0
+    while c < 2:
+        moeda = sorteia_cerebro(WIDTH * c + 1000)
+        Group_cerebro.add(moeda)
+        c+= 1
+
+    #cria o grupo de cogumelos 
+    Group_cogumelo = pygame.sprite.Group()
+    k = 0
+    while k < 2:
+        obstaculo = sorteia_cogumelo(WIDTH * k + 1000)
+        Group_cogumelo.add(obstaculo)
+        k += 1
+
+    # cria o grupo das vidas
+    Group_vida = pygame.sprite.Group()
+    v = 0
+    while v < 2:
+        lifes = sorteia_vida(WIDTH * v + 1000)
+        Group_vida.add(lifes)
+        v += 1
+    return Group_cerebro, Group_cogumelo, Group_vida
+
+Group_cerebro, Group_cogumelo, Group_vida = inicializacao()
+
+# condição para fazer o loop do game
+estado = True 
+
+# condição inicial para pausar o jogo 
+pausa = False 
+
+###vamo criar uma função para que a gente consiga desenhar na tela
+
+def fim_de_tela(sprite):
+    return sprite.rect[0] < -(sprite.rect[2])
+def desenha():
+    #preencher a tela de uma cor especifica
+    raposa.Group_char.draw(janela)
+    piso.Group_piso.draw(janela)
+    Group_cogumelo.draw(janela)
+    Group_cerebro.draw(janela)
+    Group_vida.draw(janela)
+
+#essa função vai atualizar a todo momento os freimer da tela com as nossas classes
+def atualiza():
+    piso.Group_piso.update()
+    Group_cogumelo.update()
+    Group_cerebro.update()
+    Group_vida.update()
+#arrumar a velocidade com que a raposa corre 
+intercala = pygame.time.Clock()
+
+#Estabelecendo as quantidades iniciais de vida
+vida = 3
+# Estabelecendo a variavel para contabilizar os pontos 
+pontos = 0
+# comparativo para aumentar a valocidade de deslocamento dos itens do game 
+desloca0 = desloca
+
+#Inicialização do Menu 
+#=============================================================================
+pygame.mixer.music.set_volume(0)
+ativa_menu.play()
+menu_princial(janela,menu_img1,menu_img2)
+#=============================================================================
