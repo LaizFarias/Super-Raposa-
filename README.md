@@ -11,7 +11,7 @@ Introdução:
 
 Video de apresentação: 
 
-- Link: https://www.youtube.com/watch?v=Tx1D8L9CEfw
+- Link: 
 
 Como iniciar o game? 
 
